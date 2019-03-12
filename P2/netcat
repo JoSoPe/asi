@@ -1,0 +1,11 @@
+nc -l 10000 servidor
+
+nc ip port
+cd /tmp/
+mkdir prova
+cd prova/
+touch prova.txt
+nano prova.txt
+ls -l
+cat prova.txt
+cat prova.txt | nc ip 10000
