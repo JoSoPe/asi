@@ -9,3 +9,5 @@ nano prova.txt
 ls -l
 cat prova.txt
 cat prova.txt | nc ip 10000
+
+mirar select
