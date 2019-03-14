@@ -5,6 +5,7 @@ import sys
 HOST = None               # Symbolic name meaning all available interfaces
 PORT = 50007              # Arbitrary non-privileged port
 s = None
+print 'Waiting Client'
 for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC,
                               socket.SOCK_STREAM, 0, socket.AI_PASSIVE):
     af, socktype, proto, canonname, sa = res
@@ -26,8 +27,15 @@ if s is None:
     sys.exit(1)
 conn, addr = s.accept()
 print 'Connected by', addr
-while 1:
+received = True
+while received:
     data = conn.recv(1024)
-    if not data: break
-    conn.send(data)
+    print data
+    if data == 'D':
+        received=False
+        conn.send('D')
+        print 'Client ',addr,' disconnect'
+        break
+    missatge=raw_input('m: ')
+    conn.send(missatge)
 conn.close()
