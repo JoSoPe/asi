@@ -1,12 +1,29 @@
 # Echo client program
 import socket
+import sys
 
-HOST = '172.20.2.6'    # The remote host
+HOST = 'daring.cwi.nl'    # The remote host
 PORT = 50007              # The same port as used by the server
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((HOST, PORT))
+s = None
+for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
+    af, socktype, proto, canonname, sa = res
+    try:
+        s = socket.socket(af, socktype, proto)
+    except socket.error as msg:
+        s = None
+        continue
+    try:
+        s.connect(sa)
+    except socket.error as msg:
+        s.close()
+        s = None
+        continue
+    break
+if s is None:
+    print 'could not open socket'
+    sys.exit(1)
 s.sendall('Hello, world')
-data = s.recv(2048)
+data = s.recv(1024)
 s.close()
 print 'Received', repr(data)
 
