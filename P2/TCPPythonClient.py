@@ -2,7 +2,8 @@
 import socket
 import sys
 
-HOST = 'daring.cwi.nl'    # The remote host
+print ("C: IP")
+HOST = raw_input('C: ')    # The remote host "172.20.2.1"
 PORT = 50007              # The same port as used by the server
 s = None
 for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
@@ -22,8 +23,17 @@ for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
 if s is None:
     print 'could not open socket'
     sys.exit(1)
-s.sendall('Hello, world')
-data = s.recv(1024)
+connected = True
+while connected:
+    MSG = raw_input('M: ')
+    s.sendall(MSG)
+    data = s.recv(1024)
+    if data == 'D':
+        connected = False
+        print repr(data) , 'Properly disconected '
+        break
+    print 'M->', repr(data)
+    
 s.close()
-print 'Received', repr(data)
+
 
