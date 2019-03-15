@@ -27,6 +27,16 @@ if s is None:
     sys.exit(1)
 conn, addr = s.accept()
 print 'Connected by', addr
+print '\n'
+print 'C:IP'
+act = raw_input('M:MSG')
+action = 'C'
+for elment in act:
+    if element == 'C':
+        action = 'C'
+        print act-'C'
+        break
+
 received = True
 while received:
     data = conn.recv(1024)
