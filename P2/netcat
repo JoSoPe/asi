@@ -11,3 +11,12 @@ cat prova.txt
 cat prova.txt | nc ip 10000
 
 mirar select
+
+Mateix fitxer server i client. Server default.
+Si poso C: passo a ser client, si posu soc servidor i escric C: enviu D, desconecto i passo a client..
+Select per mirar si enviu un raw_input de teclat o mostrar contingut port
+
+
+
+DNS
+/etc/resolv.conf sino tenim un resolv configurat no podrem fer res, creem una maquina i fem que faci de servidor de DNS, instalar bind a priori esta tot fet, i aquest servidor DNS srà un DNS cache o local, i estara configurat per demanar root server, el SO qui tindra com a servidor dns local, si despres de instalar el bind en el conf iha una linia que hi diu nameserver 127.0.x.y estic sent jo com a proces actua en UDP i port 53 com a servidor cache
