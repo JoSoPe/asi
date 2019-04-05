@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>	
+<meta charset="utf-8">
+<title>Formulari</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="estil.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+	function check(input){
+		if (input.value != document.getElementById('psswrd').value){
+			input.setCustomValidity('La contrasenya no coincideix');
+		}
+		else{
+			input.setCustomValidity('')
+		}
+	}
+</script>
+</head>
+
+<body>
+<div class="topnav tema-index" id="barra-topnav-index">
+<a class="active" href="web_page.html"> <i class="fa fa-home"></i></a>
+<a href="dades_grup.html"> Dades del grup</a>
+<a href="web_preferides.html"> Webs preferides</a>
+<a href="fotografies.html"> Fotografies</a>
+<a href="formulari.html"> Formulari</a>
+<a href="solicitud.html"> Solicitud</a>
+<a href="programa_jvs.html"> Programa JS</a>
+</div>
+	<div class="w3-content w3-padding-4">
+		<p class="titol"> Omple les dades de la sol·licitud</p>
+
+		<div class="caixa_solicitud">
+			<form id="Formulari" action = "" method = "">
+				<label>Nom d'usuari</label>
+				<input type="text" name="Nom d'usuari" id="nom_usuari" required="required" pattern="[A-Za-z]{2,10}" title="Maxim 10 caràcters sense números"/>
+				<br>
+				<label>Contrasenya</label>
+				<input type="password" name="psswrd" id="psswrd" required="required" pattern=".{6,}" title="Sis o més caràcterss"/>
+				<br>
+				<label>Confirmació de la contrasenya</label>
+				<input type="password" name="Repeticio_psswrd" id = "rep_psswrd" pattern=".{6,}" title="Sis o més caràcters" oninput="check(this)"/>
+				<br>
+				<label>Escull el sexe: </label>
+				<input type="text" name="provincia" id="provincia" list ="prov" required="required"/>
+				<datalist id="prov">
+					<option value="Dona">
+					<option value="Home">
+					<option value="NS/NC">
+				</datalist>
+				<br>
+				<label>Correu electrònic</label>
+				<input type="email" name="correu" id="correu" required="required"/>
+				<br>
+				<label>Afegeix un comentari</label>
+				<textarea rows="5" cols="50"></textarea>
+				<br>
+				<br>
+				<input type="submit" value="Enviar" id="boto_enviar">
+				<input type="reset" value="Esborrar" id="boto_esborrar">
+			</form>
+	</div>
+</div>
+
+
+
+</body>
+</html>
