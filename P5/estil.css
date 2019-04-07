@@ -31,24 +31,25 @@
 .imatge {text-align: center}
 
 .caixa_formulari {
-    line-height: 1.4em;
+    line-height: 100%;
     border-style: solid;
     border-color: rgba(0,128,0,0.43);
-    background: rgba(255,255,0,0.66);
-    max-width:450px;;
+    background: rgba(255,0,255,0.66);
+    max-width:50%;;
     overflow: auto;
     margin: 0 auto;
-    padding: 25px 25px;
+    padding: 10%;
+
 }
 
 .caixa_solicitud {
-    line-height: 1.4em;
-    border-style: solid;
+    line-height: 100%;
+    border-style: groove;
     border-color: rgba(0,128,0,0.43);
     background: rgba(255,255,0,0.66);
-    max-width:495px;;
+    max-width:50%;
     overflow: auto;
     margin: 0 auto;
-    padding: 25px 25px;
+    padding: 10%;
 }
 .titol {text-align: center;font-family: Arial; font-size: 150%}

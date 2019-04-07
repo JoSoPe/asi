@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
 <script>
-	function loadXMLDoc(){
+<!--	function loadXMLDoc(){
 		var xmlhttp;
 		var objecte_div;
 		objecte_div=document.getElementById("myDiv");
@@ -27,7 +27,29 @@
 		}
 		xmlhttp.open("GET","entrada.txt",true);
 		xmlhttp.send();
-	}
+	} 
+  -->
+	function loadXMLDoc(){
+		var xmlhttp;
+		var objecte_div;
+		objecte_div=document.getElementById("te").style.colour;
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 ){
+				if (xmlhttp.responseText==1) { 
+					objecte_div.style.color="green";
+				}
+				else{
+					objecte_div.style.color="yellow";
+}
+}
+else{
+objecte_div.style.color = "red";}
+			
+		}
+		xmlhttp.open("GET","entrada.txt",true);
+		xmlhttp.send();
+
 </script>
 </head>
 
@@ -44,10 +66,12 @@
   <a href="programa_jvs.html"> Programa JS</a>
   </div>
 	<div id="myDiv" style="color:blue">
-		Hola!!!!!!
+	<p id="text">	Hola!!!!!!</p>
 	</div>
+	<p id="te">	Hola!!!!!!</p>
 	<script>
-		setInterval("loadXMLDoc()",3000);
+	  setInterval(loadXMLDoc,300);
+<!--	  setInterval(function(){alert("HELLO");},3000) -->
 	</script>
 </body>
 </html>
