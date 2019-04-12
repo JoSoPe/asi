@@ -5,3 +5,31 @@ des de la màquina mare: problemes el resolver de la maquina mare el manipulem p
 en una qualsevol sense entorn grafic llencem un navegador web, li podem instalar un firefox i al ser una console més podem a través de sockets la visualització estigui en una altra maquina, i un dels mecanismes l'ofereix el ssh, pot executar una applicació pero lentrada sortida estigui en un terminal remot opcio -x
 
 en el servidor:
+
+alies:
+nom que es dona a un directori en l'arbre de la nostra página del servidor per tal d'ocultar el path real.
+
+redirecció:
+nom que es dona per a un url, que realment realitza una sgona conexió a un url que s'ha supbstituit per el nom.
+
+proxi revers:
+entres una url i all hi ha un proxi revers, aquest realitza la segona conexió demana les dades i les torna. Si les deixa exactament com estaven, pots veure la url de la máquina que ha enviat les dades al proxi.
+genera una conexió http pero la fa el navegador tu no t'enteres
+
+
+proxypassreverse:
+canvia la url de la capçalera per la própia del proxy
+
+virtualhost:
+http://maq/...
+remapejar /maq  --> virtualhost permet replicar.
+Encara que tinguis un unic servidor web, pots cambiar el nom /maq
+per exemple podem escriure /maq1 i que ens mostri una cosa
+i que cuan posem /maq2 ens omstri exactament el matix.
+o bé posar la IP de maq1 i maq2  pot ser que no funcioni al configurar el virtualost (el fet de posar la ip de maq 1 i maq2)
+també podem fer que maq1 respongui a una part de l'arbre i maq2 a una altre.
+aixó es possible perque en el missatge http de petició d'un navegador, hi tenim la primera linia amb la comanda i url, esencialment amb url surt el nom de la maquina, cuan el servidor rep la peticio i analiza la informació i el dns resol.
+
+
+apache site  --> a2ensite https://www.digitalocean.com/community/tutorials/como-configurar-virtual-host-de-apache-en-ubuntu-14-04-lts-es
+
