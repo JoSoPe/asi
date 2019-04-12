@@ -1,0 +1,7 @@
+desde quina maquina llençarem el navegador web?¿ 
+
+des de la màquina mare: problemes el resolver de la maquina mare el manipulem pk sigui el resolver dins la maquina virtual.
+
+en una qualsevol sense entorn grafic llencem un navegador web, li podem instalar un firefox i al ser una console més podem a través de sockets la visualització estigui en una altra maquina, i un dels mecanismes l'ofereix el ssh, pot executar una applicació pero lentrada sortida estigui en un terminal remot opcio -x
+
+en el servidor:
