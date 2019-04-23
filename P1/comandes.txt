@@ -1,0 +1,47 @@
+&
+## instalació ##
+sudo apt-get install lxc
+apt-get install lxc-templates
+
+# configuració del bridge  #
+emacs /etc/default/lxc-net	
+# dins de la filla
+cd /etc/network/
+emacs interfaces			#dins de emacs interfics hem d tenir
+"""
+auto lo
+iface lo inet loopback
+auto eth0
+iface eth0 inet static
+      address 172.20.2.XX
+      netmask 255.255.0.0		# desar fent X-S i per tancar X-C
+      gateway 172.20.2.10		# per tenir internet al container
+"""
+apt-get install iputils-ping		#instalar ping
+
+
+
+# container # maq -->  hi2(.11) || hi(.12) #
+sudo lxc-create -t debian -n hi		#crear container de debian noms 1 cop
+sudo lxc-start -n hi -d	     		#arrencar container
+sudo lxc-ls -f 	     			#mostrar containers
+lxc-ls --fancy				#mostrar ip de la máquina
+brctl show  				#mostrar conexions interfícies
+bridge link show			# "	  "
+sudo lxc-attach -n hi   			#entrar a la máquina
+sudo lxc-stop -n hi			#parar el container
+sudo lxc-destroy -n hi			#destruir el container
+
+
+#-net user,host_fwd;5555:-22
+
+
+#configurar open vpn
+1- obrir maquines
+2- comprobar que están en l mateix bridge
+3- obrir un terminal a la carpeta on hi ha el fitxer client.txt
+4- executar:
+sudo /usr/sbin/openvpn --config client.txt
+sudo brctl addif lxcbr0 tap0
+sudo ifconfig tap0 up
+brctl show				#ens hauria de mostrar en el bridge la conexió
