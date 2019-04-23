@@ -5,3 +5,8 @@
 5- la maquina primaria ha de ser lamaquina autoritat de tota la zona del grup, aqui hem de tenir tots elsregistres possibles de la base de dades (registres A,nx,ms,...)
 6- el registre ns ha de contenir que ella mateixa es la encarregada del domini
 7- ns <- maquines que fan de dns  en el nostre cas primaria ns1.grup.5 i secundari ns2.grup.4
+
+
+CONSULTAR!!!
+
+si maquina 2 configuració és corecta o no . (no es hi odem comunicar gent dig g2.asi.itic.cat i ambtraceroute tampoc.)
