@@ -1,0 +1,33 @@
+$TTL 604800
+g2.asi.itic.cat.	IN	SOA	ns1.g2.asi.itic.cat.	g2sistemes.asi.itic.cat. (
+				2014011201	; serie
+				7200		; Refresh
+				3600		; Retry
+				604800		; Expire
+				604800	)	; Negative Cache TTL
+
+;servidor de noms
+g2.asi.itic.cat.	IN	NS	ns1.g2.asi.itic.cat.
+g2.asi.itic.cat.	IN	NS	ns2.g2.asi.itic.cat.
+
+;Registre MX
+g2.asi.itic.cat.	IN	MX	2	mail.g2.asi.itic.cat.
+mail.g2.asi.itic.cat.	IN	MX	2	mail.g2.asi.itic.cat.
+proves.g2.asi.itic.cat.	IN	MX	2	proves.g2.asi.itic.cat.
+ns.g2.asi.itic.cat.	IN	MX	2	ns.g2.asi.itic.cat.
+
+;mapa de noms a adreces
+
+ns1.g2.asi.itic.cat.	IN	A	172.20.2.4
+ns2.g2.asi.itic.cat.	IN	A	172.20.2.5
+g2.asi.itic.cat.	IN	A	172.20.2.2
+
+mail.g2.asi.itic.cat.	IN	A	172.20.2.7
+proves.g2.asi.itic.cat.	IN	A	172.20.2.8
+ns.g2.asi.itic.cat.	IN	A	172.20.2.9
+sweb.g2.asi.itic.cat.	IN	A	172.20.2.6
+
+;Canonical name
+web.g2.asi.itic.cat.	IN	CNAME	g2.asi.itic.cat
+www.g2.asi.itic.cat.	IN	CNAME	g2.asi.itic.cat.
+form.g2.asi.itic.cat.	IN	CNAME	g2.asi.itic.cat.

@@ -1,11 +1,15 @@
-from socket import *
+import socket
 
-serverName='172.20.2.1'
-serverPort=12000
-clientSocket = socket(socket.AF_INET, socket.SOCK_DGRAM)
-message = raw_input("Input lowercase sentence: ")
-messageLowerCase = message.lower()
-clientSocket.sendto(messageLowerCase,(serverName, serverPort))
-modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
-print (modifiedMessage)
-clientSocket.close()
+msgFromClient = "Hello UDP Server"
+bytesToSend = str.encode(msgFromClient)
+serverAddressPort = ("72.20.02.1", 50007)
+bufferSize = 1024
+ 
+# Es crea un socket UDP al lloc del client
+UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+
+# envia al server utilitzant el socket UDP creat
+UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+msgFromServer = UDPClientSocket.recvfrom(bufferSize)
+msg = "Message from Server {}".format(msgFromServer[0])
+print msg

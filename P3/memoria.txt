@@ -1,6 +1,18 @@
 configuracions a la màquina DNSPrimari
 
-//modificació del fitxer named.conf.local
+//modificació del interfaces /etc/network/interfaces
+
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+      address 172.20.2.4
+      netmask 255.255.0.0
+      gateway 172.20.2.1
+      dns-nameservers 127.0.0.1 172.20.2.4
+
+//modificació del fitxer named.conf.local     /etc/bind/
 
 zone "g2.asi.itic.cat" IN {
      type master;
@@ -8,7 +20,7 @@ zone "g2.asi.itic.cat" IN {
      allow-transfer {172.20.2.5;};
 };
 
-//creació del fitxer db.g2.asi.itic.cat
+//creació del fitxer db.g2.asi.itic.cat /etc/bind/
 
 $TTL 604800
 g2.asi.itic.cat.        IN      SOA     ns1.g2.asi.itic.cat.    g2sistemes.asi.itic.cat. (
@@ -30,31 +42,13 @@ g2.asi.itic.cat.        IN      A       172.20.2.2
 
 //configuracions a la màquina DNSSeundari
 
-//modificació del fitxer named.conf.local
+//modificació del fitxer named.conf.local      /etc/bind/
 
 zone "g2.asi.itic.cat" IN{
      type slave;
      file "db.g2.asi.itic.cat";
-     masters {172.20.2.4;}
+     masters {172.20.2.4;};
 };
 
-//creació del fitxer db.g2.asi.itic.cat
 
-$TTL 1w
-@    SOA        ns      g2sistemes      (
-                2011111201              ;       serie
-                2h                      ;       Refresh
-                1h                      :       Retry
-                1w                      ;       Expire
-                1w)                     ;       Negative Cache TTL
-                                                                                \
-        NS      ns1
-        NS      ns2
-        A       172.20.2.4
-
-;
-; Name address map
-;
-ns1     A       172.20.2.4
-ns2     A       172.20.2.5
 

@@ -1,91 +1,84 @@
 #https://steelkiwi.com/blog/working-tcp-sockets/
 # Echo server program
+import select
 import socket
 import sys
+import Queue
 
+#Create a TCP/IP socket
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setblocking(0)
 
-PORT = 50007              # Arbitrary non-privileged port
-s = None
-def E0():
-    print 'State 0 opening socket'
-    HOST = None               # Symbolic name meaning all available interfaces
-    for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC,
-                                  socket.SOCK_STREAM, 0, socket.AI_PASSIVE):
-        af, socktype, proto, canonname, sa = res
-        try:
-            s = socket.socket(af, socktype, proto)
-        except socket.error as msg:
-            s = None
-            continue
-        try:
-            s.bind(sa)
-            s.listen(1)
-        except socket.error as msg:
-            s.close()
-            s = None
-            continue
-        break
-    if s is None:
-        print 'could not open socket'
-        sys.exit(1)
-        E0()
-    else:
-        E1(s)
+# Bind the socket to the port
+server_address = ('172.20.2.1', 50007)
+print sys.stderr, 'starting up on %s port %s' % server_address
+server.bind(server_address)
 
-def E1(s):
-    print 'State 1 socket opened, waiting a client'
-    conn, addr = s.accept()
-    print 'Connected by', addr
-    received = True
-    while received:
-        data = conn.recv(1024)
-        print data
-        if data == 'D':
-            received=False
-            conn.send('D')
-            print 'Client ',addr,' disconnect'
-            break
-        missatge=raw_input('m: ')
-        conn.send(missatge)
-    conn.close()
-    E1(s)
+# Listen for incoming connections
+server.listen(5)
+# Sockets from which we expect to read
+inputs = [server]
 
-def E2():
-    print 'State2 client mode opening socket'
-    HOST = raw_input('C: ')    # The remote host "172.20.2.1"
-    s = None
-    for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
-        af, socktype, proto, canonname, sa = res
-        try:
-            s = socket.socket(af, socktype, proto)
-        except socket.error as msg:
-            s = None
-            continue
-        try:
-            s.connect(sa)
-        except socket.error as msg:
-            s.close()
-            s = None
-            continue
-        break
-    if s is None:
-        print 'could not open socket'
-        sys.exit(1)
-        E2()
-    connected = True
-    E3(s,connected)
+# Sockets to which we expect to write
+outputs = []
 
-def E3(s,connected):
-    print 'state3 soket opened properly, waiting message to send'
-    while connected:
-            MSG = raw_input('M: ')
-            s.sendall(MSG)
+# Outgoing message queues (socket:Queue)
+message_queues = {}
+
+while inputs:
+    # Wait for at least one of the sockets to be ready for processing
+    print sys.stderr, '\nwaiting for the next event'
+    readable, writable, exceptional = select.select(inputs, outputs, inputs)
+    # Handle inputs
+    for s in readable:
+        if s is server:
+            # A "readable" server socket is ready to accept a connection
+            connection, client_address = s.accept()
+            print >>sys.stderr, 'new connection from', client_address
+            connection.setblocking(0)
+            inputs.append(connection)
+            # Give the connection a queue for data we want to send
+            message_queues[connection] = Queue.Queue()
+        else:
             data = s.recv(1024)
-            if data == 'D':
-                connected = False
-                print repr(data) , 'Properly disconected '
-                break
-            print 'M->', repr(data)
-    s.close()
-    E0()
-E2()
+            if data:
+                # A readable client socket has data
+                print sys.stderr, 'received "%s" from %s' % (data, s.getpeername())
+                message_queues[s].put(data)
+                # Add output channel for response
+                if s not in outputs:
+                    outputs.append(s)
+                else:
+                # Interpret empty result as closed connection
+                    print sys.stderr, 'closing', client_address, 'after reading no data'
+                # Stop listening for input on the connection
+                if s in outputs:
+                    outputs.remove(s)
+                inputs.remove(s)
+                s.close()
+
+                # Remove message queue
+                del message_queues[s]
+    # Handle outputs
+    for s in writable:
+        try:
+            next_msg = message_queues[s].get_nowait()
+        except Queue.Empty:
+            # No messages waiting so stop checking for writability.
+            print >>sys.stderr, 'output queue for', s.getpeername(), 'is empty'
+            outputs.remove(s)
+        else:
+            print >>sys.stderr, 'sending "%s" to %s' % (next_msg, s.getpeername())
+            s.send(next_msg)
+
+    # Handle "exceptional conditions"
+    for s in exceptional:
+        print >>sys.stderr, 'handling exceptional condition for', s.getpeername()
+        # Stop listening for input on the connection
+        inputs.remove(s)
+        if s in outputs:
+            outputs.remove(s)
+        s.close()
+
+        # Remove message queue
+        del message_queues[s]

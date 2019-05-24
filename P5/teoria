@@ -1,0 +1,13 @@
+javascript és un codi executable i l'execute al navegador
+
+pas més enlla
+
+el codi js que sha baixat pot demanar un contingut web
+
+cient escriu a la url, peticio web protocol http i llavors hi ha una resposta i et presenta contingut html i paral·lelament ot haverhi contingut js vol dir que sexecutera, si usuari fa una acció manipulara el contingut, com que es executable risc de seguretaat.
+
+quan el js fa peticions http aixo sen di AJAX (possibilitat de que el navegador web faci peticions http contra el sevidor web independentment del usuari) la manera de formata les dades es amb xml be heredat pels taks. com concreta la informació
+
+un de més compacte utilitza JSON, clau valor
+
+

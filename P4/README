@@ -1,0 +1,26 @@
+Per fer l'enviament:
+
+mail root //mail usuari@un.domini.exemple
+
+A nivell local hem fet
+mail user1@localhost
+mail user2@localhost
+mail root@localhost
+
+priorita en MX, com més petit és el valor, major és la prioritat
+
+configuracio exim4
+dpkg-reconfigure exim4-config
+
+Dintre els usuaris creats tenim les seguents comandes:
+enviar missatge --> mail usuari
+revisar cua --> mailq
+revisar safata -->mail
+
+per modificar el tema DNS per desgracia estem treballant amb ubuntu...no debian hem danar a la carpeta seguent:
+
+/etc/systemd/resolved.conf
+Un cop a dins descomentem el DNS i afegim la IP del nostre DNSPrimari.
+
+Fem un reboot i revisem el fitxer /etc/resolv.conf
+finalment fem un ping nom_domini
